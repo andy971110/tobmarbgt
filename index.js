@@ -107,7 +107,6 @@ bot.on('message', function (msg) {
 	var name = msg.from.first_name;
 	var id = msg.from.id;
 	var lng = null;
-	console.log(cronn);
 	MongoClient.connect(dbConfig, function(err, db){
 		var coll = db.collection("users");
 		coll.find({ChatID: chatId})

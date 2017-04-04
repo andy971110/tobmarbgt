@@ -4,7 +4,7 @@
   "description": "Telegram",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.js"
   },
   "author": "Andrei",
   "license": "ISC",

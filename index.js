@@ -69,8 +69,6 @@ bot.on('message', function (msg) {
 	var id = msg.from.id;
 	var lng = null;
 
-	console.log(msg);
-	console.log(cronn);
 	MongoClient.connect(dbConfig, function(err, db){
 		var coll = db.collection("users");
 		coll.find({ChatID: chatId})

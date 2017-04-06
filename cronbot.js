@@ -22,9 +22,7 @@ var job1 = new CronJob ('*/50 * * * * *', function() {
 							collection.find()
 							.toArray(function(err, docs) {
 								var user = docs[i];
-								console.log(i);
 								var URL = 'https://api.telegram.org/bot373098125:AAEDP31dxWwLxszbFamHh-DJrW_l7zE7Guk/forwardMessage?chat_id='+user.ChatID+'&from_chat_id='+user['uid' + j]+'&message_id='+user['id_m' + j];
-								console.log(URL);
 								request(URL, function(error, response, body){
 									var date = JSON.parse(body);
 

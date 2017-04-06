@@ -8,7 +8,6 @@ var bot = new TelegramBot (token, {polling: true});
 var m = 0;
 var count = null;
 var k = null;
-var cronn = 0;
 var options = {
 	parse_mode:'Markdown'
 };
@@ -69,12 +68,7 @@ bot.on('message', function (msg) {
 	var name = msg.from.first_name;
 	var id = msg.from.id;
 	var lng = null;
-	if(cronn<2){
-		cronn++;
-	}		
-	if(cronn==0){
-		job1.start();		
-	}
+
 	console.log(msg);
 	console.log(cronn);
 	MongoClient.connect(dbConfig, function(err, db){

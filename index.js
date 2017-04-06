@@ -116,7 +116,7 @@ bot.on('message', function (msg) {
 						[{
 							text: '\u270f\ufe0f '+ trans[lang].quest,
 							url: 'https://t.me/tlenta'
-						}]
+						}],
 						[{
 							text: '\u2b50\ufe0f '+ trans[lang].store,
 							url: 'https://storebot.me/bot/telelenta_bot'

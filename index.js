@@ -36,6 +36,7 @@ const trans = {
 		"faq1":"*Помощь*\nВ нашем канале Вы сможете следить за последними новостями и обновлениями бота.\n\nВы можете задать все существующие вопросы, нажав на кнопку ниже.",
 		"mychan":"Наш канал",
 		"quest":"Задать вопрос",
+		"store":"Оценить бота",
 	},
 	"en":{
 		"save": "*Language saved*\nNow the bot will be in english.",
@@ -60,6 +61,7 @@ const trans = {
 		"faq1":"*Help*\nIn our channel You can follow the latest news and updates of the bot.\n\nYou can ask all existing questions by clicking on the button below.",
 		"mychan":"Our channel",
 		"quest":"Ask question",
+		"store":"To evaluate bot",
 	}
 }
 
@@ -105,7 +107,6 @@ bot.on('message', function (msg) {
 				var options1 = {
 					parse_mode:'Markdown',
 					reply_markup: JSON.stringify({
-						one_time_keyboard: true,
 						resize_keyboard:true,
 						inline_keyboard: [
 						[{
@@ -115,7 +116,7 @@ bot.on('message', function (msg) {
 						[{
 							text: '\u270f\ufe0f '+ trans[lang].quest,
 							url: 'https://t.me/tlenta'
-						}],
+						}]
 						]
 					})
 				}		
@@ -137,7 +138,7 @@ bot.on('message', function (msg) {
 						var uname = msg.forward_from_chat.username;
 						var uid = msg.forward_from_chat.id;
 						var nameu = msg.forward_from_chat.title;
-						addAccess(chatId, uname, uid, id_m, lang, nameu);
+						addAccess(chatId, uname, uid, id_m, lang, nameu, name);
 					}else if(msg.forward_from_chat.username==undefined){
 						bot.sendMessage(chatId, trans[lang].nousername_+msg.forward_from_chat.title+trans[lang]._nousername, options);
 					}
@@ -391,7 +392,7 @@ bot.on('message', function (msg) {
 });
 });
 
-function addAccess(chatId, uname, uid, id_m, lang, nameu){
+function addAccess(chatId, uname, uid, id_m, lang, nameu, name){
 	MongoClient.connect(dbConfig, function(err, db){
 		var stats = db.collection("stats");
 		var collection = db.collection("users");
@@ -402,19 +403,19 @@ function addAccess(chatId, uname, uid, id_m, lang, nameu){
 			var user = docs[0];
 			if(user.channelN!=15){
 				if(user.uid15==null){
-					flag=10;
+					flag=15;
 				}
 				if(user.uid14==null){
-					flag=10;
+					flag=14;
 				}
 				if(user.uid13==null){
-					flag=10;
+					flag=13;
 				}
 				if(user.uid12==null){
-					flag=10;
+					flag=12;
 				}
 				if(user.uid11==null){
-					flag=10;
+					flag=11;
 				}
 				if(user.uid10==null){
 					flag=10;
@@ -500,13 +501,13 @@ function addAccess(chatId, uname, uid, id_m, lang, nameu){
 			//console.log(err);
 		});
 	});
+	start(chatId, name, lang);
 	return;
 }
 
 function language(chatId){
 	bot.sendMessage(chatId, "Выберите язык\n\nSelect the language", {
 		reply_markup: JSON.stringify({
-			one_time_keyboard: true,
 			resize_keyboard:true,
 			keyboard: [
 			['Русский \ud83c\uddf7\ud83c\uddfa'],
@@ -656,11 +657,11 @@ function start(chatId, name, lang) {
 			bot.sendMessage(chatId, name+trans[lang].addch, {
 				parse_mode:'Markdown',
 				reply_markup: JSON.stringify({
-					one_time_keyboard: true,
 					resize_keyboard:true,
 					keyboard: [
 					['\ud83d\udce2 '+trans[lang].mych],
-					['\ud83d\udcac '+trans[lang].faq]]
+					['\ud83d\udcac '+trans[lang].faq]
+					]
 				})
 			});
 		});
@@ -676,7 +677,6 @@ function viewchannel(chatId, lang){
 			URL = 'https://t.me/'
 			bot.sendMessage(chatId, trans[lang].ch, {
 				reply_markup: JSON.stringify({
-					one_time_keyboard: true,
 					resize_keyboard:true,
 					inline_keyboard: [
 					[{

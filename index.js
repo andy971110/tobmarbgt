@@ -13,53 +13,6 @@ var options = {
 	parse_mode:'Markdown'
 };
 
-var job1 = new CronJob ('*/30 * * * * *', function() {
-	MongoClient.connect(dbConfig, function(err, db){
-		var stats = db.collection("stats");
-		var collection = db.collection("users");
-		var stat = null;
-		stats.find().toArray(function(err, docs) {
-			stat = docs[0];
-			count = stat.count;
-			for(var i=0;i<count;i++){		
-				(function(i) {
-					for(var j=1;j<=15;j++){
-						(function(j) {			
-							collection.find()
-							.toArray(function(err, docs) {
-								var user = docs[i];
-								var URL = 'https://api.telegram.org/bot301685092:AAHIvFKai4h3lrvo5GaQ8cDM72zVI-ypWWw/forwardMessage?chat_id='+user.ChatID+'&from_chat_id='+user['uid' + j]+'&message_id='+user['id_m' + j];
-								console.log(URL);
-								request(URL, function(error, response, body){
-									var date = JSON.parse(body);
-
-									if(date.ok === true){
-										var id_mz= user['id_m' + j];
-										collection.updateOne({ ChatID: user.ChatID }
-											, { $set: { ['id_m' + j]: id_mz+1
-										} }, function(err, result) {
-											console.log(id_mz+1);
-										});	
-										
-									}
-									if(date.ok === false){
-										if(date.description === 'Bad Request: MESSAGE_ID_INVALID'){
-											collection.updateOne({ ChatID: user.ChatID }
-												, { $set: { ['id_m' + j]: user['id_m' + j]+1
-											} }, function(err, result) {
-												console.log('2-'+user['id_m' + j]);
-											});
-										}						
-									}									
-								});	
-							});
-						})(j);
-					}
-				})(i);
-			}	
-		});	
-	});		
-});
 const trans = {
 	"ru":{
 		"save": "*Язык сохранен*\nТеперь бот на русском языке.",
@@ -119,7 +72,7 @@ bot.on('message', function (msg) {
 	if(cronn<2){
 		cronn++;
 	}		
-	if(cronn==1){
+	if(cronn==0){
 		job1.start();		
 	}
 	console.log(msg);

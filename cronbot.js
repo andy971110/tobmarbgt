@@ -7,7 +7,7 @@ var token = '373098125:AAEDP31dxWwLxszbFamHh-DJrW_l7zE7Guk';
 var bot = new TelegramBot (token, {polling: true});
 var cronn=0;
 
-var job1 = new CronJob ('*/30 * * * * *', function() {
+var job1 = new CronJob ('*/50 * * * * *', function() {
 	MongoClient.connect(dbConfig, function(err, db){
 		var stats = db.collection("stats");
 		var collection = db.collection("users");

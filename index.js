@@ -119,7 +119,7 @@ bot.on('message', function (msg) {
 						}],
 						[{
 							text: '\u2b50\ufe0f '+ trans[lang].store,
-							url: 'https://storebot.me/bot/telelenta_bot'
+							url: 'https://telegram.me/storebot?start=telelenta_bot'
 						}]
 
 
